@@ -4,11 +4,11 @@ A professional web application to track equipment and manage maintenance schedul
 
 ## Features
 
-- ✅ Equipment Management - Add, track, and manage equipment
-- ✅ Maintenance Scheduling - Automated due date calculations  
-- ✅ Service History - Complete records of all work done
-- ✅ Dashboard - View stats and recent services
-- ✅ Professional UI - Clean, easy-to-use interface
+-  Equipment Management - Add, track, and manage equipment
+-  Maintenance Scheduling - Automated due date calculations  
+-  Service History - Complete records of all work done
+-  Dashboard - View stats and recent services
+-  Professional UI - Clean, easy-to-use interface
 
 ## Technology Stack
 

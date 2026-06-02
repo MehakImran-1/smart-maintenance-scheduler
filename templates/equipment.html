@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}Equipment - Smart Maintenance Scheduler{% endblock %}
+
+{% block content %}
+<h1>🔧 Equipment Management</h1>
+
+<!-- Add Equipment Button -->
+<button class="btn btn-primary" onclick="openAddEquipmentModal()">+ Add Equipment</button>
+
+<!-- Equipment Table -->
+<div class="card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Serial</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="equipment-list">
+            <tr><td colspan="6">Loading...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Equipment Modal -->
+<div id="equipmentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAddEquipmentModal()">&times;</span>
+        <h2>Add New Equipment</h2>
+        <form onsubmit="addEquipment(event)">
+            <div class="form-group">
+                <label>Equipment Name *</label>
+                <input type="text" id="equipment-name" required>
+            </div>
+            <div class="form-group">
+                <label>Type *</label>
+                <input type="text" id="equipment-type" required>
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" id="equipment-location">
+            </div>
+            <div class="form-group">
+                <label>Serial Number</label>
+                <input type="text" id="equipment-serial">
+            </div>
+            <div class="form-group">
+                <label>Manufacturer</label>
+                <input type="text" id="equipment-manufacturer">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Equipment</button>
+        </form>
+    </div>
+</div>
+
+<script>
+// Load equipment when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadEquipment();
+});
+
+function loadEquipment() {
+    fetch('/api/equipment')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const tbody = document.getElementById('equipment-list');
+                tbody.innerHTML = '';
+                
+                if (data.data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6">No equipment yet</td></tr>';
+                } else {
+                    data.data.forEach(equipment => {
+                        const row = `<tr>
+                            <td>${equipment.name}</td>
+                            <td>${equipment.equipment_type}</td>
+                            <td>${equipment.location || '-'}</td>
+                            <td>${equipment.serial_number || '-'}</td>
+                            <td><span class="badge badge-${equipment.status}">${equipment.status}</span></td>
+                            <td>
+                                <button class="btn-small" onclick="deleteEquipment(${equipment.id})">Delete</button>
+                            </td>
+                        </tr>`;
+                        tbody.innerHTML += row;
+                    });
+                }
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function openAddEquipmentModal() {
+    document.getElementById('equipmentModal').style.display = 'block';
+}
+
+function closeAddEquipmentModal() {
+    document.getElementById('equipmentModal').style.display = 'none';
+}
+
+function addEquipment(event) {
+    event.preventDefault();
+    
+    const data = {
+        name: document.getElementById('equipment-name').value,
+        equipment_type: document.getElementById('equipment-type').value,
+        location: document.getElementById('equipment-location').value,
+        serial_number: document.getElementById('equipment-serial').value,
+        manufacturer: document.getElementById('equipment-manufacturer').value
+    };
+    
+    fetch('/api/equipment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Equipment added successfully!');
+            closeAddEquipmentModal();
+            loadEquipment();
+            // Clear form
+            document.querySelector('form').reset();
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function deleteEquipment(id) {
+    if (confirm('Are you sure?')) {
+        fetch(`/api/equipment/${id}`, { method: 'DELETE' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Equipment deleted!');
+                    loadEquipment();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('equipmentModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}

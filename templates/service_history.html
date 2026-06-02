@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Service History - Smart Maintenance Scheduler{% endblock %}
+
+{% block content %}
+<h1>📋 Service History</h1>
+
+<!-- Service History Table -->
+<div class="card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Equipment ID</th>
+                <th>Technician</th>
+                <th>Service Date</th>
+                <th>Duration (hours)</th>
+                <th>Cost</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="history-list">
+            <tr><td colspan="6">Loading...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+// Load service history when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadServiceHistory();
+});
+
+function loadServiceHistory() {
+    fetch('/api/service-history')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const tbody = document.getElementById('history-list');
+                tbody.innerHTML = '';
+                
+                if (data.data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6">No service history yet</td></tr>';
+                } else {
+                    data.data.forEach(service => {
+                        const row = `<tr>
+                            <td>${service.equipment_id}</td>
+                            <td>${service.technician_name}</td>
+                            <td>${service.service_date}</td>
+                            <td>${service.duration_hours || '-'}</td>
+                            <td>$${service.cost.toFixed(2)}</td>
+                            <td><span class="badge badge-${service.status}">${service.status}</span></td>
+                        </tr>`;
+                        tbody.innerHTML += row;
+                    });
+                }
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+</script>
+{% endblock %}

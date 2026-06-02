@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Smart Maintenance Scheduler{% endblock %}
+
+{% block content %}
+<h1>📊 Maintenance Dashboard</h1>
+
+<!-- Stats Cards -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Equipment</h3>
+        <p class="stat-number" id="total-equipment">0</p>
+    </div>
+    <div class="stat-card">
+        <h3>Maintenance Tasks</h3>
+        <p class="stat-number" id="total-schedules">0</p>
+    </div>
+    <div class="stat-card">
+        <h3>Overdue Tasks</h3>
+        <p class="stat-number stat-danger" id="overdue-maintenance">0</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Services</h3>
+        <p class="stat-number" id="total-services">0</p>
+    </div>
+</div>
+
+<!-- Recent Services -->
+<div class="card">
+    <h2>📝 Recent Services</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Equipment ID</th>
+                <th>Technician</th>
+                <th>Date</th>
+                <th>Cost</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="recent-services">
+            <tr><td colspan="5">Loading...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+// Load dashboard data when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadDashboardData();
+});
+
+function loadDashboardData() {
+    // Fetch analytics
+    fetch('/api/analytics/dashboard')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const stats = data.data;
+                
+                // Update stat cards
+                document.getElementById('total-equipment').textContent = stats.total_equipment;
+                document.getElementById('total-schedules').textContent = stats.total_schedules;
+                document.getElementById('overdue-maintenance').textContent = stats.overdue_maintenance;
+                document.getElementById('total-services').textContent = stats.total_services;
+                
+                // Update recent services table
+                const tbody = document.getElementById('recent-services');
+                tbody.innerHTML = '';
+                
+                if (stats.recent_services.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5">No services yet</td></tr>';
+                } else {
+                    stats.recent_services.forEach(service => {
+                        const row = `<tr>
+                            <td>${service.equipment_id}</td>
+                            <td>${service.technician_name}</td>
+                            <td>${service.service_date}</td>
+                            <td>$${service.cost.toFixed(2)}</td>
+                            <td><span class="badge badge-${service.status}">${service.status}</span></td>
+                        </tr>`;
+                        tbody.innerHTML += row;
+                    });
+                }
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+</script>
+{% endblock %}

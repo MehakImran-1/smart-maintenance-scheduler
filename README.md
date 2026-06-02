@@ -120,5 +120,18 @@ If you have questions:
 2. Open an issue on GitHub
 3. Email me directly
 
-## preview
+## Preview
 
+### Dashboard
+![Dashboard](dashboard.png)
+
+### Equipmments
+![Equipments](equipments.png)
+
+### Maintenance
+![Maintenance](maintenance.png)
+
+### Service history
+![Service history](service_history.png) 
+
+---

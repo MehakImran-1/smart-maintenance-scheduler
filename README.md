@@ -70,25 +70,6 @@ http://localhost:5000
 - View recent services
 - Track total costs
 
-## Project Structure
-smart-maintenance-scheduler/
-├── app.py                      # Main Flask app
-├── database.py                 # Database models
-├── requirements.txt            # Python packages
-│
-├── static/
-│   ├── css/
-│   │   └── style.css           # Styling
-│   └── js/
-│       └── script.js           # JavaScript
-│
-└── templates/
-├── base.html               # Navigation
-├── dashboard.html          # Home page
-├── equipment.html          # Equipment list
-├── maintenance.html        # Maintenance tasks
-└── service_history.html    # Service records
-
 ## Requirements
 
 - Python 3.8 or higher

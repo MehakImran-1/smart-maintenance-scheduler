@@ -1,6 +1,6 @@
 # Smart Maintenance Scheduler
 
-A professional web application to track equipment and manage maintenance schedules.
+A web application to track equipment and manage maintenance schedules.
 
 ## Features
 

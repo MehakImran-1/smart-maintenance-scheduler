@@ -20,7 +20,7 @@ A professional web application to track equipment and manage maintenance schedul
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/[YOUR-GITHUB-USERNAME]/smart-maintenance-scheduler.git
+git clone https://github.com/MehakImran-1/smart-maintenance-scheduler.git
 cd smart-maintenance-scheduler
 ```
 
@@ -94,32 +94,7 @@ smart-maintenance-scheduler/
 - Python 3.8 or higher
 - pip (Python package manager)
 - Modern web browser
-
-## Future Enhancements
-
-- [ ] User authentication and login
-- [ ] Email notifications for overdue maintenance
-- [ ] Export reports (PDF/CSV)
-- [ ] Advanced analytics and charts
-- [ ] Mobile app version
-
-## License
-
-MIT License - See LICENSE file for details
-
-## Author
-
-**[Your Name]**
-- GitHub: (https://github.com/mehak784)
-- Email: 70147062@student.uol.edu.pk
-
-## Support
-
-If you have questions:
-1. Check the documentation
-2. Open an issue on GitHub
-3. Email me directly
-
+  
 ## Preview
 
 ### Dashboard
@@ -135,3 +110,11 @@ If you have questions:
 ![Service history](service_history.png) 
 
 ---
+
+## About the Developer
+
+**Mehak Imran**  
+Bachelor of Science in Information Engineering Technology (BSIET)
+
+GitHub: https://github.com/MehakImran-1  
+Email: 70147062@student.uol.edu.pk

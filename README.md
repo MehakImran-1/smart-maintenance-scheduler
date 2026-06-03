@@ -45,31 +45,6 @@ python app.py
 ### Step 5: Open in Browser
 http://localhost:5000
 
-## How to Use
-
-### Adding Equipment
-1. Go to Equipment page
-2. Click "+ Add Equipment"
-3. Fill in equipment details
-4. Click "Add Equipment"
-
-### Creating Maintenance Schedules
-1. Go to Maintenance page
-2. Click "+ Add Maintenance"
-3. Enter task name and frequency
-4. System auto-calculates due dates
-
-### Recording Services
-1. When maintenance is due, click "Complete"
-2. Enter technician name, hours, and cost
-3. Service is automatically recorded
-
-### Viewing Dashboard
-- See total equipment count
-- Check overdue maintenance count
-- View recent services
-- Track total costs
-
 ## Requirements
 
 - Python 3.8 or higher
